@@ -1,0 +1,7 @@
+flake8==7.3.0
+flake8-docstrings==1.7.0
+pep8-naming==0.15.1
+pycodestyle==2.14.0
+pygame-ce==2.5.7
+pytest==9.0.3
+pytest-timeout==2.1.0
