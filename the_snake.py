@@ -6,7 +6,7 @@
 # Заставляет Python хранить аннотации как строки, не вычисляя их
 from __future__ import annotations
 
-from random import randint, choice
+from random import choice, randint
 from typing import Final, Iterable, Optional
 
 import pygame
