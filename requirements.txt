@@ -5,3 +5,4 @@ pycodestyle==2.14.0
 pygame-ce==2.5.7
 pytest==9.0.3
 pytest-timeout==2.1.0
+pygame==2.6.1
