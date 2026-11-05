@@ -148,6 +148,7 @@ class Snake(GameObject):
         """Создает экземпляр Змейки с позицией в середине экрана."""
         super().__init__(body_color=SNAKE_COLOR)
         self.reset()
+        self.direction = RIGHT
 
     def get_head_position(self) -> Point:
         """Возвращает координаты головы Змейки."""
@@ -239,9 +240,10 @@ def handle_keys(game_object: Snake) -> None:
             pygame.quit()
             raise SystemExit
         elif event.type == pygame.KEYDOWN:
-            new_direction = TURN_KEYS.get((event.key, game_object.direction))
-            if new_direction is not None:
-                game_object.next_direction = new_direction
+            game_object.next_direction = TURN_KEYS.get(
+                (event.key, game_object.direction),
+                game_object.direction,
+            )
 
 
 def main() -> None:
@@ -261,18 +263,16 @@ def main() -> None:
     while True:
         clock.tick(SPEED)
 
-        # 1. Ввод и смена направления.
         handle_keys(snake)
         snake.update_direction()
 
         snake.move()
         head_position = snake.get_head_position()
-        # 2. Проверка на съеденное Яблоко.
+
         if head_position == apple.position:
             snake.length += 1
             apple.randomize_position(snake.positions + [poison.position])
 
-        # 3. Проверка на съеденный Яд.
         if head_position == poison.position:
             if snake.length > 1:
                 snake.length -= 1
@@ -282,14 +282,12 @@ def main() -> None:
 
             poison.randomize_position(snake.positions + [apple.position])
 
-        # 4. Проверка на столкновение Змейки с собой.
         if head_position in snake.positions[1:]:
             snake.reset()
             screen.fill(BOARD_BACKGROUND_COLOR)
             apple.randomize_position(snake.positions + [poison.position])
             poison.randomize_position(snake.positions + [apple.position])
 
-        # 5. Отрисовка и обновление экрана.
         snake.draw()
         apple.draw()
         poison.draw()
